@@ -19,6 +19,7 @@ import java.sql.SQLException;
 @RequestMapping("/api/v1/product-image")
 public class ProductImageController {
 
+
     private final ProductImageService productImageService;
 
     @PostMapping("/{product}")
