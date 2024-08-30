@@ -15,6 +15,7 @@ public interface ProductRepo extends JpaRepository<Product, String> {
     @Query(value = "SELECT * FROM product WHERE description LIKE  %?1% ORDER BY description DESC", nativeQuery = true)
     public Page<Product> findAllBySearchText(String searchtext, Pageable pageable);
 
+
     @Query(value = "SELECT COUNT(*) from product WHERE description LIKE  %?1%", nativeQuery = true)
     public  Integer countAllBySearchText(String searchtext);
 

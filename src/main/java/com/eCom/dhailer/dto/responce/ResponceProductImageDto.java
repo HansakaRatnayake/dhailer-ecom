@@ -15,11 +15,9 @@ public class ResponceProductImageDto {
 
     private String PropertyId;
 
-    private String directory;
-
     private String resourceurl;
 
-    private String hash;
-
     private String filename;
+
+    private byte[] image;
 }

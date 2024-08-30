@@ -50,7 +50,7 @@ public class ProductImageServiceImpl implements ProductImageService {
         }
 
         try {
-            resource = fileService.createResource(file, "dhailer/product_images/", bucketname);
+            resource = fileService.createResource(file, "/product_images/", bucketname);
 
             ProductImage productImage = ProductImage.builder()
                     .PropertyId(UUID.randomUUID().toString())
@@ -58,6 +58,7 @@ public class ProductImageServiceImpl implements ProductImageService {
                     .directory(resource.getDirectory().getBytes())
                     .filename(dataExtractor.blobToByteArray(resource.getFilename()))
                     .resourceurl(dataExtractor.blobToByteArray(resource.getResourceurl()))
+                    .image(file.getBytes())
                     .product(selectedproduct.get())
                     .build();
 

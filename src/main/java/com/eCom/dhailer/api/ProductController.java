@@ -2,6 +2,7 @@ package com.eCom.dhailer.api;
 
 import com.eCom.dhailer.dto.request.RequestCustomerDto;
 import com.eCom.dhailer.dto.request.RequestProductDto;
+import com.eCom.dhailer.service.ProductService;
 import com.eCom.dhailer.service.impl.CustomerServiceImpl;
 import com.eCom.dhailer.service.impl.ProductServiceImpl;
 import com.eCom.dhailer.util.StandardResponce;
@@ -10,14 +11,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/products")
 public class ProductController {
 
 
-    private final ProductServiceImpl productService;
+    private final ProductService productService;
 
     @PostMapping
     public ResponseEntity<StandardResponce> create(@RequestBody RequestProductDto dto) {

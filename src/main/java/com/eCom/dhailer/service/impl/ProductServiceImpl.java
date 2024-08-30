@@ -7,8 +7,10 @@ import com.eCom.dhailer.dto.responce.paginate.ProductPaginateDto;
 import com.eCom.dhailer.entity.Product;
 import com.eCom.dhailer.entity.ProductImage;
 import com.eCom.dhailer.exception.EntryNotFoundException;
+import com.eCom.dhailer.repo.ProductCategoryRepo;
 import com.eCom.dhailer.repo.ProductImageRepo;
 import com.eCom.dhailer.repo.ProductRepo;
+import com.eCom.dhailer.repo.SupplierRepo;
 import com.eCom.dhailer.service.ProductService;
 import com.eCom.dhailer.util.FileDataExtractor;
 import lombok.RequiredArgsConstructor;
@@ -27,15 +29,26 @@ public class ProductServiceImpl implements ProductService {
     public final ProductRepo productRepo;
     public final ProductImageRepo productImageRepo;
     public final FileDataExtractor fileDataExtractor;
+    public final SupplierRepo supplierRepo;
+    public final ProductCategoryRepo productCategoryRepo;
+
 
     @Override
     public void create(RequestProductDto dto) {
+
+
+
 
         Product product = Product.builder()
                 .propertyId(UUID.randomUUID().toString())
                 .qty(dto.getQty())
                 .description(dto.getDescription())
-                .unitprice(dto.getUnitprice())
+                .unitPrice(dto.getUnitPrice())
+                .salePrice(dto.getSalePrice())
+                .discountPrice(dto.getDiscountPrice())
+                .sales(dto.getSales())
+                .productCategory(productCategoryRepo.findById(dto.getProductCategory()).orElseThrow(() -> new EntryNotFoundException("Category not found")))
+                .supplier(supplierRepo.findById(dto.getSupplier()).orElseThrow(() -> new EntryNotFoundException("Supplier not found")))
                 .build();
 
         productRepo.save(product);
@@ -58,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
                 .propertyId(id)
                 .qty(dto.getQty())
                 .description(dto.getDescription())
-                .unitprice(dto.getUnitprice())
+                .unitPrice(dto.getUnitPrice())
                 .build();
 
         productRepo.save(product);
@@ -87,7 +100,7 @@ public class ProductServiceImpl implements ProductService {
                 .propertyId(product.getPropertyId())
                 .description(product.getDescription())
                 .qty(product.getQty())
-                .unitprice(product.getUnitprice())
+                .unitPrice(product.getUnitPrice())
                 .productImages(responceProductImageDtoList)
                 .build();
     }
@@ -95,9 +108,9 @@ public class ProductServiceImpl implements ProductService {
     public ResponceProductImageDto createResponceProductImageDto(ProductImage productImage){
         return  ResponceProductImageDto.builder()
                 .PropertyId(productImage.getPropertyId())
-                .hash(fileDataExtractor.byteArrayToString(productImage.getHash()))
-                .directory(fileDataExtractor.byteArrayToString(productImage.getDirectory()))
-                .filename(fileDataExtractor.byteArrayToString(productImage.getFilename()))
+//                .hash(fileDataExtractor.byteArrayToString(productImage.getHash()))
+//                .directory(fileDataExtractor.byteArrayToString(productImage.getDirectory()))
+//                .filename(fileDataExtractor.byteArrayToString(productImage.getFilename()))
                 .resourceurl(fileDataExtractor.byteArrayToString(productImage.getResourceurl()))
                 .build();
     }

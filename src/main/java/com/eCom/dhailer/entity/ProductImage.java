@@ -24,6 +24,9 @@ public class ProductImage {
     @Lob
     private byte[] filename;
 
+    @Lob
+    private byte[] image;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", referencedColumnName = "propertyId")
     private Product product;

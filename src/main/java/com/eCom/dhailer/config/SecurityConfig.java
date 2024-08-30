@@ -65,7 +65,7 @@ public class SecurityConfig  {
                 .addFilterAfter(jwtTokenVerifier, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers(
-                                "/api/v1/"
+                                "/api/v1/**"
                         )
                         .permitAll()
                         .anyRequest().authenticated())

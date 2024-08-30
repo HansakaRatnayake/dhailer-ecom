@@ -1,11 +1,11 @@
 package com.eCom.dhailer.dto.responce;
 
-import com.eCom.dhailer.entity.ProductImage;
-import com.eCom.dhailer.entity.enums.PaymentMethod;
+import com.eCom.dhailer.entity.ProductCategory;
+import com.eCom.dhailer.entity.Supplier;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.Date;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -17,7 +17,13 @@ public class ResponceProductDto {
 
     private String propertyId;
     private Integer qty;
-    private Double unitprice;
+    private BigDecimal unitPrice;
     private String description;
+    private Integer sales;
+    private BigDecimal salePrice;
+    private BigDecimal discountPrice;
+    private ResponceProductCategoryDto productCategory;
+    private ResponceSupplierDto supplier;
     private List<ResponceProductImageDto> productImages;
+
 }
