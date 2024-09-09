@@ -40,6 +40,18 @@ public class RandomKeyGenerator {
 
     }
 
+    public String generateProductCode() {
+
+        List<String> allByCategoryCode = supplierRepo.findAllByCategoryCode();
+
+        String key = generateKey("PI");
+
+        if (allByCategoryCode.contains(key)) key = generateCategoryCode();
+
+        return key;
+
+    }
+
 
     public String generateKey(String starttext){
 

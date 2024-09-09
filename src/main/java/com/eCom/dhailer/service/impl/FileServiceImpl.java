@@ -32,8 +32,11 @@ public class FileServiceImpl implements FileService {
 
             String originalFilename = file.getOriginalFilename();
             String newfilename = imageUploadGenerator.genarateDHailerResourceName(originalFilename, UUID.randomUUID().toString());
+
+            System.out.println(directory);
             PutObjectResult putObjectResult = s3Client.putObject(new PutObjectRequest(bucket, directory + "" + newfilename, file.getInputStream(),
                     new ObjectMetadata()).withCannedAcl(CannedAccessControlList.PublicRead));
+
 
             return new CommonFileSavedBinaryDataDto(
                     new SerialBlob(putObjectResult.getContentMd5().getBytes()),

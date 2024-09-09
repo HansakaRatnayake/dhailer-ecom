@@ -16,14 +16,16 @@ import java.util.List;
 public class ResponceProductDto {
 
     private String propertyId;
+    private String code;
     private Integer qty;
     private BigDecimal unitPrice;
     private String description;
     private Integer sales;
     private BigDecimal salePrice;
     private BigDecimal discountPrice;
-    private ResponceProductCategoryDto productCategory;
-    private ResponceSupplierDto supplier;
+    private BigDecimal revenue;
+    private String productCategory;
+    private String supplier;
     private List<ResponceProductImageDto> productImages;
 
 }

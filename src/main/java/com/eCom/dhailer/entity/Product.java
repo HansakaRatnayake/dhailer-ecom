@@ -19,6 +19,10 @@ public class Product {
     @Column(length = 80)
     private String propertyId;
 
+
+    @Column(length = 20,unique = true,nullable = false)
+    private String code;
+
     @Column(nullable = false)
     private Integer qty;
 
@@ -37,7 +41,8 @@ public class Product {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal discountPrice;
 
-
+    @Column(precision = 10, scale = 2, columnDefinition = "DECIMAL(10,2) DEFAULT 0")
+    private BigDecimal revenue;
 
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -46,7 +51,7 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<CustomerOrder> customerOrders = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private ProductCategory productCategory;
 
     @ManyToOne(fetch = FetchType.LAZY)

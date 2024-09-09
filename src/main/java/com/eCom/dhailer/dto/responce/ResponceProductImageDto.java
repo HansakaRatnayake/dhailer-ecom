@@ -13,11 +13,9 @@ import java.util.List;
 @AllArgsConstructor
 public class ResponceProductImageDto {
 
-    private String PropertyId;
+    private String propertyId;
 
-    private String resourceurl;
+    private String resourceUrl;
 
-    private String filename;
-
-    private byte[] image;
+    private String image;
 }

@@ -24,5 +24,5 @@ public class RequestProductDto {
     private BigDecimal discountPrice;
     private String productCategory;
     private String supplier;
-    private List<RequestProductImageDto> productImages;
+//    private List<RequestProductImageDto> productImages;
 }

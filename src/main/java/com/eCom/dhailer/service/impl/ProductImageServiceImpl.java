@@ -19,8 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -50,10 +52,10 @@ public class ProductImageServiceImpl implements ProductImageService {
         }
 
         try {
-            resource = fileService.createResource(file, "/product_images/", bucketname);
 
+            resource = fileService.createResource(file, "dhailer/product_images/", bucketname);
             ProductImage productImage = ProductImage.builder()
-                    .PropertyId(UUID.randomUUID().toString())
+                    .propertyId(UUID.randomUUID().toString())
                     .hash(dataExtractor.blobToByteArray(resource.getHash()))
                     .directory(resource.getDirectory().getBytes())
                     .filename(dataExtractor.blobToByteArray(resource.getFilename()))
@@ -80,4 +82,5 @@ public class ProductImageServiceImpl implements ProductImageService {
     public void delete(String id) {
 
     }
+
 }

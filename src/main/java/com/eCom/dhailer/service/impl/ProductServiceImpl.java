@@ -5,6 +5,7 @@ import com.eCom.dhailer.dto.responce.ResponceProductDto;
 import com.eCom.dhailer.dto.responce.ResponceProductImageDto;
 import com.eCom.dhailer.dto.responce.paginate.ProductPaginateDto;
 import com.eCom.dhailer.entity.Product;
+import com.eCom.dhailer.entity.ProductCategory;
 import com.eCom.dhailer.entity.ProductImage;
 import com.eCom.dhailer.exception.EntryNotFoundException;
 import com.eCom.dhailer.repo.ProductCategoryRepo;
@@ -13,11 +14,14 @@ import com.eCom.dhailer.repo.ProductRepo;
 import com.eCom.dhailer.repo.SupplierRepo;
 import com.eCom.dhailer.service.ProductService;
 import com.eCom.dhailer.util.FileDataExtractor;
+import com.eCom.dhailer.util.RandomKeyGenerator;
+import io.netty.handler.codec.base64.Base64Encoder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -31,6 +35,7 @@ public class ProductServiceImpl implements ProductService {
     public final FileDataExtractor fileDataExtractor;
     public final SupplierRepo supplierRepo;
     public final ProductCategoryRepo productCategoryRepo;
+    public final RandomKeyGenerator randomKeyGenerator;
 
 
     @Override
@@ -42,6 +47,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = Product.builder()
                 .propertyId(UUID.randomUUID().toString())
                 .qty(dto.getQty())
+                .code(randomKeyGenerator.generateProductCode())
                 .description(dto.getDescription())
                 .unitPrice(dto.getUnitPrice())
                 .salePrice(dto.getSalePrice())
@@ -96,22 +102,34 @@ public class ProductServiceImpl implements ProductService {
 
         List<ResponceProductImageDto> responceProductImageDtoList = product.getProductImages().stream().map(this::createResponceProductImageDto).toList();
 
+
+
         return  ResponceProductDto.builder()
                 .propertyId(product.getPropertyId())
                 .description(product.getDescription())
+                .code(product.getCode())
                 .qty(product.getQty())
                 .unitPrice(product.getUnitPrice())
+                .sales(product.getSales())
+                .salePrice(product.getSalePrice())
+                .discountPrice(product.getDiscountPrice())
+                .revenue(product.getRevenue())
+                .productCategory(product.getSupplier().getProductCategories().stream().filter(p -> p.getPropertyId()
+                        .equals(product.getProductCategory().getPropertyId())).findFirst()
+                        .orElseThrow(()-> new RuntimeException("Category fetching error")).getCategoryName())
+                .supplier(product.getSupplier().getCode())
                 .productImages(responceProductImageDtoList)
                 .build();
     }
 
     public ResponceProductImageDto createResponceProductImageDto(ProductImage productImage){
         return  ResponceProductImageDto.builder()
-                .PropertyId(productImage.getPropertyId())
+                .propertyId(productImage.getPropertyId())
 //                .hash(fileDataExtractor.byteArrayToString(productImage.getHash()))
 //                .directory(fileDataExtractor.byteArrayToString(productImage.getDirectory()))
 //                .filename(fileDataExtractor.byteArrayToString(productImage.getFilename()))
-                .resourceurl(fileDataExtractor.byteArrayToString(productImage.getResourceurl()))
+                .resourceUrl(fileDataExtractor.byteArrayToString(productImage.getResourceurl()))
+                .image(Base64.getEncoder().encodeToString(productImage.getImage()))
                 .build();
     }
 

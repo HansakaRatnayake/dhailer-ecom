@@ -1,6 +1,7 @@
 package com.eCom.dhailer.api;
 
 import com.eCom.dhailer.dto.request.RequestCustomerDto;
+import com.eCom.dhailer.dto.responce.ResponceProductImageDto;
 import com.eCom.dhailer.service.ProductImageService;
 import com.eCom.dhailer.service.impl.CustomerServiceImpl;
 import com.eCom.dhailer.util.StandardResponce;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -30,6 +32,7 @@ public class ProductImageController {
                 HttpStatus.CREATED
         );
     }
+
 
 
 }

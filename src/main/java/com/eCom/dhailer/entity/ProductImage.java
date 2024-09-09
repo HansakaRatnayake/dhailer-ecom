@@ -13,7 +13,7 @@ import lombok.*;
 public class ProductImage {
 
     @Id
-    private String PropertyId;
+    private String propertyId;
 
     @Lob
     private byte[] directory;
@@ -21,10 +21,12 @@ public class ProductImage {
     private byte[] resourceurl;
     @Lob
     private byte[] hash;
+
     @Lob
     private byte[] filename;
 
     @Lob
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] image;
 
     @ManyToOne(fetch = FetchType.LAZY)
